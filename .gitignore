@@ -1,0 +1,4 @@
+.vs/
+CarambaCleaner/bin/
+CarambaCleaner/obj/
+*.csproj.user
