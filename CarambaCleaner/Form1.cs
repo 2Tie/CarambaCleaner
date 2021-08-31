@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -23,16 +24,41 @@ namespace CarambaCleaner
 
             ClientSize = new Size(800, 600);
 
-            Image imgBuf = new Bitmap(ClientSize.Width, ClientSize.Height);
-            Graphics g = Graphics.FromImage(imgBuf);
-
-            SolidBrush b = new SolidBrush(Color.Black);
-
-            g.FillRectangle(b, ClientRectangle);
-
-            BackgroundImage = imgBuf;
-            Invalidate();
+            Draw.init(ClientSize.Width, ClientSize.Height);
+            BackgroundImage = Draw.getBuffer();
         }
 
+        public void CoreLoop()
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            long startTime, interval;
+            int cycle = 1;
+            while (Created)
+            {
+                startTime = timer.ElapsedMilliseconds;
+
+                gameLogic();
+                gameRender();
+
+                interval = 16 + (cycle % 1);
+                cycle++;
+                if (cycle == 4) cycle = 1;
+
+                Application.DoEvents();
+                while (timer.ElapsedMilliseconds - startTime < interval) ;
+            }
+        }
+
+        public void gameRender()
+        {
+            Draw.context.FillRectangle(Draw.b, ClientRectangle);
+            Draw.context.FillRectangle(Draw.w, 10, 10, 50, 60);
+        }
+
+        public void gameLogic()
+        {
+
+        }
     }
 }

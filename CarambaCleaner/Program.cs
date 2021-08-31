@@ -17,7 +17,11 @@ namespace CarambaCleaner
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            using(Form1 form = new Form1())
+            {
+                form.Show();
+                form.CoreLoop();
+            }
         }
     }
 }
