@@ -54,6 +54,9 @@ namespace CarambaCleaner
         {
             Draw.context.FillRectangle(Draw.b, ClientRectangle);
             Draw.context.FillRectangle(Draw.w, 10, 10, 50, 60);
+            Draw.context.FillRectangle(Draw.w, 70, 10, 50, 60);
+            Draw.context.FillRectangle(Draw.w, 10, 80, 140, 50);
+            Draw.context.FillRectangle(Draw.w, 140, 40, 50, 50);
         }
 
         public void gameLogic()
