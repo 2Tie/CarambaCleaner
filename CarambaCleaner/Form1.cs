@@ -26,10 +26,14 @@ namespace CarambaCleaner
 
             Draw.init(ClientSize.Width, ClientSize.Height);
             BackgroundImage = Draw.getBuffer();
+
+            KeyDown += new KeyEventHandler(keyHandler);
         }
 
         public void CoreLoop()
         {
+            Inputs.Init();
+            Audio.Init();
             Stopwatch timer = new Stopwatch();
             timer.Start();
             long startTime, interval;
@@ -58,7 +62,24 @@ namespace CarambaCleaner
 
         public void gameLogic()
         {
+            //handle inputs?
+            if (Inputs.inputBuffer[0].button != Inputs.Button.NONE)
+                Audio.sysBeep.Play();
+            Inputs.inputBuffer[0].button = Inputs.Button.NONE;
+        }
 
+        void keyHandler(object sender, KeyEventArgs e)
+        {
+            Keys k = e.KeyCode;
+            for (int i = 0; i < Inputs.keys.Length; i++)
+            {
+                if (k == Inputs.keys[i])
+                {
+                    Inputs.Add((Inputs.Button)k, 0);
+                    break;
+                }
+            }
+            e.Handled = true;
         }
     }
 }
