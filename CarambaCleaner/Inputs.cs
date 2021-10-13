@@ -13,7 +13,7 @@ namespace CarambaCleaner
             public long timestamp; //when it was pressed, in milliseconds since start of song
         }
 
-        public enum Button { NONE = -1, A, B, X, Y, L1, R1}
+        public enum Button { NONE = -1, A, B, X, Y, L1, R1, COUNT}
         public static Keys[] keys = { Keys.L, Keys.P, Keys.K, Keys.O, Keys.Q, Keys.W }; //feel free to change defaults, should also be configurable in the future
 
         public static Input[] inputBuffer;

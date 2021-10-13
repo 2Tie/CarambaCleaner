@@ -10,9 +10,9 @@ namespace CarambaCleaner
         public static SoundPlayer sysBeep;
 
         //track-specific collections, to be populated and played by the track
-        static SoundPlayer track; //the background song
-        static SoundPlayer[] sampleCollection1; //the guide's samples
-        static SoundPlayer[] sampleCollection2; //the player's samples
+        public static SoundPlayer track; //the background song
+        public static SoundPlayer[] sampleCollection1; //the guide's samples
+        public static SoundPlayer[] sampleCollection2; //the player's samples
 
         public static void Init()
         {

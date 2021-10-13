@@ -13,6 +13,8 @@ namespace CarambaCleaner
 {
     public partial class Form1 : Form
     {
+        Player player;
+
         public Form1()
         {
             InitializeComponent();
@@ -34,13 +36,13 @@ namespace CarambaCleaner
         {
             Inputs.Init();
             Audio.Init();
-            Stopwatch timer = new Stopwatch();
-            timer.Start();
+            GlobalTimer.timer = new Stopwatch();
+            GlobalTimer.timer.Start();
             long startTime, interval;
             int cycle = 1;
             while (Created)
             {
-                startTime = timer.ElapsedMilliseconds;
+                startTime = GlobalTimer.timer.ElapsedMilliseconds;
 
                 gameLogic();
                 gameRender();
@@ -50,7 +52,7 @@ namespace CarambaCleaner
                 if (cycle == 4) cycle = 1;
 
                 Application.DoEvents();
-                while (timer.ElapsedMilliseconds - startTime < interval) ;
+                while (GlobalTimer.timer.ElapsedMilliseconds - startTime < interval) ;
             }
         }
 
@@ -58,14 +60,27 @@ namespace CarambaCleaner
         {
             Draw.context.FillRectangle(Draw.b, ClientRectangle);
             Draw.context.FillRectangle(Draw.w, 10, 10, 50, 60);
+
+            if (player != null)
+                player.Draw();
         }
 
         public void gameLogic()
         {
             //handle inputs?
             if (Inputs.inputBuffer[0].button != Inputs.Button.NONE)
+            {
+                if(Inputs.inputBuffer[0].button == Inputs.Button.A && player == null)
+                {
+                    player = new Player();
+                }
+                else
                 Audio.sysBeep.Play();
+            }
             Inputs.inputBuffer[0].button = Inputs.Button.NONE;
+
+            if (player != null)
+                player.Tick();
         }
 
         void keyHandler(object sender, KeyEventArgs e)
@@ -75,7 +90,7 @@ namespace CarambaCleaner
             {
                 if (k == Inputs.keys[i])
                 {
-                    Inputs.Add((Inputs.Button)k, 0);
+                    Inputs.Add((Inputs.Button)i, GlobalTimer.timer.ElapsedMilliseconds);
                     break;
                 }
             }
